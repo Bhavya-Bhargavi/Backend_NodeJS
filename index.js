@@ -8,7 +8,7 @@ const firmRoutes = require("./routes/firmRoutes")
 const productRoutes = require("./routes/producRoutes")
 const app = express()
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 dotEnv.config();
 
@@ -26,6 +26,6 @@ app.listen(PORT, () => {
     console.log(`server running at ${PORT}`)
 })
 
-app.get("/home", (req,res) => {
+app.get("/", (req,res) => {
     res.send("welcome")
 })
