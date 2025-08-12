@@ -76,6 +76,14 @@ const deleteProductById = async(req,res) => {
             res.status(404).json({error: "No Product Found"})
         }
 
+        const firm = await Firm.findOne({ products: productId });
+        if (!firm) {
+            return res.status(404).json({ error: "Firm not found" });
+        }   
+        firm.products = firm.products.filter(product => product.toString() !== productId);
+        await firm.save();
+        res.status(200).json({ message: "Product deleted successfully" });
+        
     } catch (error) {
         
         console.error(error);

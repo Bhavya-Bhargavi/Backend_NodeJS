@@ -68,6 +68,14 @@ const deleteFirmById = async(req,res) => {
             res.status(404).json({error: "No Firm Found"})
         }
 
+        const vendor = await Vendor.findById(req.vendorId);
+        if(!vendor){    
+            return res.status(404).json({ error: "Vendor not found" });
+        }
+        vendor.firm = vendor.firm.filter(firm => firm.toString() !== firmId);
+        await vendor.save();
+        res.status(200).json({ message: "Firm deleted successfully" });
+        
     } catch (error) {
         
         console.error(error);
